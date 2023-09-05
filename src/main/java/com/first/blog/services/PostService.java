@@ -3,6 +3,7 @@ package com.first.blog.services;
 import java.util.List;
 
 import com.first.blog.payload.PostDto;
+import com.first.blog.payload.PostResponse;
 
 
 public interface PostService {
@@ -19,7 +20,6 @@ public interface PostService {
 
 		void deletePost(Integer postId);
 		
-
 		
 		//get single post
 		
@@ -31,6 +31,15 @@ public interface PostService {
 		
 		//get all posts by user
 		List<PostDto> getPostsByUser(Integer userId);
+		
+		//get all posts
+		
+		PostResponse getAllPost(Integer pageNumber,Integer pageSize);
+		
+
+		
+		//search posts
+		List<PostDto> searchPosts(String keyword);
 		
 
 }
