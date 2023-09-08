@@ -78,13 +78,21 @@ public class PostController {
 
 	@GetMapping("/posts")
 	public ResponseEntity<PostResponse> getAllPost(
-			@RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber,
-			@RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize
-			) {
+			@RequestParam(value = "AppConstants.PAGE_NUMBER", defaultValue = "0", required = false) Integer pageNumber,
+			@RequestParam(value = "AppConstants.PAGE_SIZE", defaultValue = "1", required = false) Integer pageSize,
+			@RequestParam(value = "AppConstants.SORT_BY", defaultValue = "postId", required = false) String sortBy,
+			@RequestParam(value = "AppConstants.SORT_DIR", defaultValue = "asc", required = false) String sortDir)
+			 {
 
-		PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize);
+		PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize, sortBy, sortDir);
 		return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
 	}
+	// search
+		@GetMapping("/posts/search/{keywords}")
+		public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords") String keywords) {
+			List<PostDto> result = this.postService.searchPosts(keywords);
+			return new ResponseEntity<List<PostDto>>(result, HttpStatus.OK);
+		}
 
 	
 }

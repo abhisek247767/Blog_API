@@ -33,9 +33,8 @@ public interface PostService {
 		List<PostDto> getPostsByUser(Integer userId);
 		
 		//get all posts
-		
-		PostResponse getAllPost(Integer pageNumber,Integer pageSize);
-		
+				
+		PostResponse getAllPost(Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
 
 		
 		//search posts
