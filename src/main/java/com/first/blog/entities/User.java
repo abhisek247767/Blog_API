@@ -30,8 +30,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-//@Getter
-//@Setter
+@Getter
+@Setter
 public class User implements UserDetails {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

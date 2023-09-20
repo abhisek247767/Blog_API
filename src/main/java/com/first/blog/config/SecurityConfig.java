@@ -47,10 +47,7 @@ import com.first.blog.security.JwtAuthenticationFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    public static final String[] PUBLIC_URLS = {"/api/v1/auth/**", "/v3/api-docs", "/v2/api-docs",
-            "/swagger-resources/**", "/swagger-ui/**", "/webjars/**"
-
-    };
+    public static final String[] PUBLIC_URLS = {"/api/v1/auth/**"};
 
     @Autowired
     private CustomUserDetailService customUserDetailService;
@@ -65,29 +62,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.
-                csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers(PUBLIC_URLS)
-                .permitAll()
-                .requestMatchers(HttpMethod.GET)
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().exceptionHandling()
-                .authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    	http.
+        csrf()
+        .disable()
+        .authorizeHttpRequests()
+        .requestMatchers(PUBLIC_URLS)
+        .permitAll()
+        .requestMatchers(HttpMethod.GET)
+        .permitAll()
+        .anyRequest()
+        .authenticated()
+        .and().exceptionHandling()
+        .authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    	http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.authenticationProvider(daoAuthenticationProvider());
-        DefaultSecurityFilterChain defaultSecurityFilterChain = http.build();
+    	http.authenticationProvider(daoAuthenticationProvider());
+    	DefaultSecurityFilterChain defaultSecurityFilterChain = http.build();
 
-        return defaultSecurityFilterChain;
+    	return defaultSecurityFilterChain;
+
     }
+    
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
 

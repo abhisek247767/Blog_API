@@ -35,8 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// TODO Auto-generated method stub
 		//1. get token 
 
-		String requestToken = request.getHeader("Authorization"); //Authorization is key it's value is token.
+		String requestToken = request.getHeader("Authorization");
 		Enumeration<String> headerNames = request.getHeaderNames();
+		System.out.println(headerNames);
 
 		while(headerNames.hasMoreElements())
 		{
@@ -45,12 +46,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// Bearer 2352523sdgsg
 
 		System.out.println(requestToken);
+		System.out.println("check--1");
 
 		String username = null;
 
 		String token = null;
 
 		if (requestToken != null && requestToken.startsWith("Bearer")) {
+			System.out.println("working token");
 
 			token = requestToken.substring(7);
 
@@ -76,9 +79,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
 			if (this.jwtTokenHelper.validateToken(token, userDetails)) {
-				// Everything works !!
-				// Now do authentication 
-
+				
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
